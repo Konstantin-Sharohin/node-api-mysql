@@ -2,10 +2,12 @@ const express = require('express');
 const axios = require('axios');
 const mysql = require('mysql');
 const path = require('path');
+const http = require('http');
 
 const app = express();
 const port = 3000;
 const hostname = '127.0.0.1';
+const server = http.createServer(app);
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -61,8 +63,8 @@ app.get('/database', function(req, res) {
 });
 /***************/
 
-app.use(function (req, res, next) {
+app.use(function (req, res) {
     res.status(404).send("Can`t find that...")
 });
 
-app.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}`));
+server.listen(port, hostname, () => console.log(`Server running at http://${hostname}:${port}`));
